@@ -1,0 +1,73 @@
+<html>
+<head>
+<script src="wysiwyg.js"></script>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
+#wysiwyg_cp, #actions {
+border-radius: 10px;
+box-shadow: 0px 6px 10px grey;
+display: flex;
+justify-content: space-between;
+padding: 10px;
+width:700px;
+}
+#richTextField {
+border-radius: 10px;
+box-shadow: 0px 6px 10px grey;
+padding: 10px;
+margin-top: 20px;
+}
+</style>
+</head>
+<body onLoad="iFrameOn();">
+<center>
+<h2>HTML Editor</h2>
+<form action="my_parse_file.php" name="myform" id="myform" method="post">
+<div id="wysiwyg_cp" style="padding:8px; width:700px;">
+  <input type="button" class="btn btn-success" onClick="iBold()" value="B"> 
+  <input type="button" class="btn btn-success" onClick="iUnderline()" value="U">
+  <input type="button" class="btn btn-success" onClick="iItalic()" value="I">
+  <input type="button" class="btn btn-success" onClick="iFontSize()" value="Text Size">
+  <input type="button" class="btn btn-success" onClick="iForeColor()" value="Text Color">
+  <input type="button" class="btn btn-success" onClick="iHorizontalRule()" value="HR">
+  <input type="button" class="btn btn-success" onClick="iUnorderedList()" value="UL">
+  <input type="button" class="btn btn-success" onClick="iOrderedList()" value="OL">
+  <input type="button" class="btn btn-success" onClick="iLink()" value="Link">
+  <input type="button" class="btn btn-success" onClick="iUnLink()" value="UnLink">
+  <input type="button" class="btn btn-success" onClick="iImage()" value="Image">
+</div>
+<!-- Hide(but keep)your normal textarea and place in the iFrame replacement for it -->
+<textarea style="display:none;" name="myTextArea" id="myTextArea" cols="100" rows="14"></textarea>
+<iframe name="richTextField" id="richTextField" style="border:#000000 1px solid; width:700px; height:300px;"></iframe>
+<!-- End replacing your normal textarea -->
+
+</form>
+<div id="actions">
+<input name="myBtn" type="button" class="btn btn-success" value="Submit Data" onClick="javascript:submit_form();"/>
+<input name="myBtn2" type="button" class="btn btn-success" value="Generate HTML" onClick="generateHTML();"/>
+</div>
+</center>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+function generateHTML() {
+  // Prendo il contenuto HTML dell'iframe
+  var html = window.frames['richTextField'].document.body.innerHTML;
+  // Creo un elemento textarea temporaneo
+  var temp = document.createElement("textarea");
+  // Assegno il contenuto HTML all'elemento textarea
+  temp.value = html;
+  // Aggiungo l'elemento textarea al documento
+  document.body.appendChild(temp);
+  // Seleziono il contenuto dell'elemento textarea
+  temp.select();
+  // Copio il contenuto nell'appunti
+  document.execCommand("copy");
+  // Rimuovo l'elemento textarea dal documento
+  document.body.removeChild(temp);
+  // Mostro un messaggio di conferma
+  alert("Il codice HTML è stato copiato negli appunti.");
+}
+
+</script>
+</body>
+</html>
